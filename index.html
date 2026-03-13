@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>Glow Clinic | Medically Qualified Skin Specialists</title>
-    <meta name="description" content="Expert skin treatments in [City]. Acne, Anti-Ageing, Rejuvenation &amp; Laser. Book your free consultation with GMC registered practitioners." />
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome Icons -->
@@ -18,19 +17,40 @@
         .text-teal-primary { color: #4AA0A4; }
         .border-teal-primary { border-color: #4AA0A4; }
         .hover\:bg-teal-dark:hover { background-color: #3a8084; }
+        
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Floating WhatsApp button pulse */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        .whatsapp-pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Trust bar animation */
         .trust-bar { animation: fadeInUp 0.8s ease-out; }
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
+        
         @media (max-width: 640px) {
             .hero-text { font-size: 2rem; line-height: 1.2; }
             .tap-target { min-height: 44px; min-width: 44px; }
         }
+        
         .sticky-cta-mobile { display: none; }
         @media (max-width: 768px) {
             .sticky-cta-mobile {
@@ -46,13 +66,13 @@
                 gap: 12px;
             }
         }
+        
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 24px;
         }
-        .fade-in { animation: fadeIn 1s ease-in; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        
         .trust-icon {
             width: 40px;
             height: 40px;
@@ -64,15 +84,54 @@
             color: #4AA0A4;
             font-size: 1.25rem;
         }
-        .treatment-icon {
+        
+        /* Colorful icon styles for Ember section */
+        .color-icon-1 { background-color: #fce4e4; color: #d97777; }
+        .color-icon-2 { background-color: #e0f2fe; color: #3b82f6; }
+        .color-icon-3 { background-color: #dcfce7; color: #22c55e; }
+        .color-icon-4 { background-color: #ffedd5; color: #f97316; }
+        
+        /* Square grid for Our Treatments */
+        .treatments-square {
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .treatments-square > div {
+            border-right: 1px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            transition: background-color 0.2s;
+        }
+        .treatments-square > div:hover {
+            background-color: #f9fafb;
+        }
+        .treatments-square > div:nth-child(2),
+        .treatments-square > div:nth-child(4) {
+            border-right: none;
+        }
+        .treatments-square > div:nth-child(3),
+        .treatments-square > div:nth-child(4) {
+            border-bottom: none;
+        }
+        
+        /* Map container responsive */
+        .map-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 1rem;
+        }
+        .map-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 180px;
-            background: linear-gradient(145deg, #f0f9fa, #e6f7f8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #4AA0A4;
-            font-size: 5rem;
+            height: 100%;
+            border: 0;
         }
     </style>
 </head>
@@ -140,34 +199,34 @@
             </div>
         </section>
 
-        <!-- SERVICES OVERVIEW STRIP -->
+        <!-- OUR TREATMENTS SECTION - square with 4 quadrants matching screenshot -->
         <section id="treatments" class="py-16 px-4 bg-white">
             <div class="max-w-7xl mx-auto">
-                <h2 class="text-3xl font-bold text-center mb-12">Our Treatments</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="service-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-                        <div class="w-14 h-14 bg-teal-100 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-sun text-2xl text-teal-primary"></i></div>
-                        <h3 class="text-xl font-semibold mb-2">Skin Rejuvenation</h3>
-                        <p class="text-gray-600 mb-4">Restore your skin's natural glow with advanced laser treatments</p>
-                        <a href="#" class="text-teal-primary font-medium hover:underline inline-flex items-center">Learn More <i class="fas fa-arrow-right ml-2 text-sm"></i></a>
+                <h2 class="text-3xl font-bold text-center mb-12 fade-up">Our Treatments</h2>
+                <div class="treatments-square grid grid-cols-1 sm:grid-cols-2 max-w-3xl mx-auto fade-up">
+                    <!-- Quadrant 1: Acne / breakouts -->
+                    <div class="flex flex-col items-start">
+                        <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-3"><i class="fas fa-face-frown text-xl text-teal-primary"></i></div>
+                        <h3 class="text-lg font-semibold mb-1">Acne / breakouts</h3>
+                        <p class="text-sm text-gray-600">Teenage, hormonal, adult – we treat the root</p>
                     </div>
-                    <div class="service-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-                        <div class="w-14 h-14 bg-teal-100 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-face-smile text-2xl text-teal-primary"></i></div>
-                        <h3 class="text-xl font-semibold mb-2">Acne Treatments</h3>
-                        <p class="text-gray-600 mb-4">Clinical solutions for clear, healthy skin</p>
-                        <a href="#" class="text-teal-primary font-medium hover:underline inline-flex items-center">Learn More <i class="fas fa-arrow-right ml-2 text-sm"></i></a>
+                    <!-- Quadrant 2: Anti-aging -->
+                    <div class="flex flex-col items-start">
+                        <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-3"><i class="fas fa-clock text-xl text-teal-primary"></i></div>
+                        <h3 class="text-lg font-semibold mb-1">Anti-aging</h3>
+                        <p class="text-sm text-gray-600">Botox, fillers, lasers, skin tightening</p>
                     </div>
-                    <div class="service-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-                        <div class="w-14 h-14 bg-teal-100 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-clock text-2xl text-teal-primary"></i></div>
-                        <h3 class="text-xl font-semibold mb-2">Anti-Ageing</h3>
-                        <p class="text-gray-600 mb-4">Turn back the clock with clinically proven results</p>
-                        <a href="#" class="text-teal-primary font-medium hover:underline inline-flex items-center">Learn More <i class="fas fa-arrow-right ml-2 text-sm"></i></a>
+                    <!-- Quadrant 3: Mole / skin check -->
+                    <div class="flex flex-col items-start">
+                        <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-3"><i class="fas fa-hand-holding-heart text-xl text-teal-primary"></i></div>
+                        <h3 class="text-lg font-semibold mb-1">Mole / skin check</h3>
+                        <p class="text-sm text-gray-600">Full-body mapping & skin cancer screening</p>
                     </div>
-                    <div class="service-card bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100">
-                        <div class="w-14 h-14 bg-teal-100 rounded-lg flex items-center justify-center mb-4"><i class="fas fa-hand text-2xl text-teal-primary"></i></div>
-                        <h3 class="text-xl font-semibold mb-2">Body Treatments</h3>
-                        <p class="text-gray-600 mb-4">Comprehensive body contouring and skin solutions</p>
-                        <a href="#" class="text-teal-primary font-medium hover:underline inline-flex items-center">Learn More <i class="fas fa-arrow-right ml-2 text-sm"></i></a>
+                    <!-- Quadrant 4: Eczema / rosacea -->
+                    <div class="flex flex-col items-start">
+                        <div class="w-12 h-12 bg-teal-100 rounded-lg flex items-center justify-center mb-3"><i class="fas fa-allergies text-xl text-teal-primary"></i></div>
+                        <h3 class="text-lg font-semibold mb-1">Eczema / rosacea</h3>
+                        <p class="text-sm text-gray-600">Soothing sensitive skin with medical support</p>
                     </div>
                 </div>
             </div>
@@ -176,20 +235,20 @@
         <!-- WHY CHOOSE US -->
         <section class="py-16 px-4 bg-gray-50">
             <div class="max-w-7xl mx-auto">
-                <h2 class="text-3xl font-bold text-center mb-4">Why Thousands Trust GlowClinic</h2>
-                <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto">Medically qualified practitioners with a passion for results</p>
+                <h2 class="text-3xl font-bold text-center mb-4 fade-up">Why Thousands Trust GlowClinic</h2>
+                <p class="text-gray-600 text-center mb-12 max-w-2xl mx-auto fade-up">Medically qualified practitioners with a passion for results</p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div class="text-center p-6">
+                    <div class="text-center p-6 fade-up">
                         <div class="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6"><i class="fas fa-user-md text-3xl text-teal-primary"></i></div>
                         <h3 class="text-2xl font-bold mb-2">10+ Years</h3>
                         <p class="text-gray-600">Medical Expertise with GMC registered practitioners, not beauty therapists</p>
                     </div>
-                    <div class="text-center p-6">
+                    <div class="text-center p-6 fade-up">
                         <div class="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6"><i class="fas fa-clipboard-list text-3xl text-teal-primary"></i></div>
                         <h3 class="text-2xl font-bold mb-2">100% Bespoke</h3>
                         <p class="text-gray-600">Personalised treatment plans tailored to your unique skin needs</p>
                     </div>
-                    <div class="text-center p-6">
+                    <div class="text-center p-6 fade-up">
                         <div class="w-20 h-20 bg-teal-100 rounded-full flex items-center justify-center mx-auto mb-6"><i class="fas fa-chart-line text-3xl text-teal-primary"></i></div>
                         <h3 class="text-2xl font-bold mb-2">5,000+</h3>
                         <p class="text-gray-600">Proven results with before/after documented treatments</p>
@@ -198,34 +257,37 @@
             </div>
         </section>
 
-        <!-- POPULAR TREATMENTS - icons instead of images -->
+        <!-- EMBER DERMATOLOGY SECTION (colorful icons & animations) -->
         <section class="py-16 px-4 bg-white">
             <div class="max-w-7xl mx-auto">
-                <h2 class="text-3xl font-bold text-center mb-12">Popular Treatments</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                        <div class="treatment-icon"><i class="fas fa-syringe"></i></div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">Anti-Wrinkle Injections</h3>
-                            <p class="text-gray-600 mb-4">Smooth fine lines and wrinkles for a refreshed appearance</p>
-                            <div class="flex items-center justify-end"><a href="#" class="text-teal-primary hover:underline">Find out more →</a></div>
-                        </div>
+                <div class="flex flex-col md:flex-row justify-between items-center mb-12 fade-up">
+                    <h2 class="text-3xl font-bold text-gray-800">Ember Dermatology</h2>
+                    <a href="#" class="book-now-btn bg-teal-primary text-white px-6 py-3 rounded-lg font-semibold hover:bg-teal-dark transition mt-4 md:mt-0">Book consultation</a>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Card 1 - pink -->
+                    <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition fade-up">
+                        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4 color-icon-1"><i class="fas fa-face-frown text-2xl"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Acne / breakouts</h3>
+                        <p class="text-gray-600">Teenage, hormonal, adult – we treat the root</p>
                     </div>
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                        <div class="treatment-icon"><i class="fas fa-bolt"></i></div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">Laser Skin Resurfacing</h3>
-                            <p class="text-gray-600 mb-4">Improve skin texture, tone, and reduce scarring</p>
-                            <div class="flex items-center justify-end"><a href="#" class="text-teal-primary hover:underline">Find out more →</a></div>
-                        </div>
+                    <!-- Card 2 - blue -->
+                    <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition fade-up">
+                        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4 color-icon-2"><i class="fas fa-clock text-2xl"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Anti-aging</h3>
+                        <p class="text-gray-600">Botox, fillers, lasers, skin tightening</p>
                     </div>
-                    <div class="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
-                        <div class="treatment-icon"><i class="fas fa-spa"></i></div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-semibold mb-2">Medical Grade Facials</h3>
-                            <p class="text-gray-600 mb-4">Deep cleansing and rejuvenation for all skin types</p>
-                            <div class="flex items-center justify-end"><a href="#" class="text-teal-primary hover:underline">Find out more →</a></div>
-                        </div>
+                    <!-- Card 3 - green -->
+                    <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition fade-up">
+                        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4 color-icon-3"><i class="fas fa-hand-holding-heart text-2xl"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Mole / skin check</h3>
+                        <p class="text-gray-600">Full-body mapping & skin cancer screening</p>
+                    </div>
+                    <!-- Card 4 - orange -->
+                    <div class="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition fade-up">
+                        <div class="w-12 h-12 rounded-lg flex items-center justify-center mb-4 color-icon-4"><i class="fas fa-allergies text-2xl"></i></div>
+                        <h3 class="text-xl font-semibold mb-2">Eczema / rosacea</h3>
+                        <p class="text-gray-600">Soothing sensitive skin with medical support</p>
                     </div>
                 </div>
             </div>
@@ -234,10 +296,10 @@
         <!-- TESTIMONIALS (Indian names) -->
         <section class="py-16 px-4 bg-gray-50">
             <div class="max-w-7xl mx-auto">
-                <h2 class="text-3xl font-bold text-center mb-4">Real Results, Real People</h2>
-                <p class="text-gray-600 text-center mb-12">Join thousands of happy clients</p>
+                <h2 class="text-3xl font-bold text-center mb-4 fade-up">Real Results, Real People</h2>
+                <p class="text-gray-600 text-center mb-12 fade-up">Join thousands of happy clients</p>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="bg-white p-6 rounded-xl shadow-md fade-up">
                         <div class="flex text-yellow-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                         <p class="text-gray-700 mb-4">&#34;Life-changing results! My acne has cleared completely after years of struggling. The team really cares.&#34;</p>
                         <div class="flex items-center">
@@ -245,7 +307,7 @@
                             <div><p class="font-semibold">Priya K.</p><p class="text-sm text-gray-500">Acne Treatment</p></div>
                         </div>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="bg-white p-6 rounded-xl shadow-md fade-up">
                         <div class="flex text-yellow-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                         <p class="text-gray-700 mb-4">&#34;Professional, knowledgeable, and put me at ease. The results exceeded my expectations.&#34;</p>
                         <div class="flex items-center">
@@ -253,7 +315,7 @@
                             <div><p class="font-semibold">Rajesh M.</p><p class="text-sm text-gray-500">Anti-Ageing</p></div>
                         </div>
                     </div>
-                    <div class="bg-white p-6 rounded-xl shadow-md">
+                    <div class="bg-white p-6 rounded-xl shadow-md fade-up">
                         <div class="flex text-yellow-400 mb-4"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                         <p class="text-gray-700 mb-4">&#34;Bridal package was worth every penny. My skin glowed on my wedding day!&#34;</p>
                         <div class="flex items-center">
@@ -262,31 +324,31 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center mt-8"><a href="#" class="text-teal-primary font-medium hover:underline">Read more reviews on Google <i class="fas fa-arrow-right ml-2"></i></a></div>
+                <div class="text-center mt-8 fade-up"><a href="#" class="text-teal-primary font-medium hover:underline">Read more reviews on Google <i class="fas fa-arrow-right ml-2"></i></a></div>
             </div>
         </section>
 
         <!-- BEFORE/AFTER GALLERY -->
         <section id="gallery" class="py-16 px-4 bg-gray-50">
             <div class="max-w-7xl mx-auto">
-                <h2 class="text-3xl font-bold text-center mb-4">Real Results</h2>
-                <p class="text-gray-600 text-center mb-12">Actual patients, documented results</p>
+                <h2 class="text-3xl font-bold text-center mb-4 fade-up">Real Results</h2>
+                <p class="text-gray-600 text-center mb-12 fade-up">Actual patients, documented results</p>
                 <div class="gallery-grid">
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md fade-up">
                         <div class="grid grid-cols-2 gap-2 p-2">
                             <div><p class="text-xs text-gray-500 mb-1">Before</p><img src="https://images.unsplash.com/photo-1600850056621-8b109a1fcd18?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Before treatment" class="rounded-lg w-full h-32 object-cover" loading="lazy" /></div>
                             <div><p class="text-xs text-gray-500 mb-1">After</p><img src="https://images.unsplash.com/photo-1600850056621-8b109a1fcd18?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="After treatment" class="rounded-lg w-full h-32 object-cover" loading="lazy" /></div>
                         </div>
                         <div class="p-4"><p class="font-semibold">Acne Scarring</p><p class="text-sm text-gray-500">3 sessions CO2 Laser</p></div>
                     </div>
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md fade-up">
                         <div class="grid grid-cols-2 gap-2 p-2">
                             <div><p class="text-xs text-gray-500 mb-1">Before</p><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Before treatment" class="rounded-lg w-full h-32 object-cover" loading="lazy" /></div>
                             <div><p class="text-xs text-gray-500 mb-1">After</p><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="After treatment" class="rounded-lg w-full h-32 object-cover" loading="lazy" /></div>
                         </div>
                         <div class="p-4"><p class="font-semibold">Anti-Wrinkle</p><p class="text-sm text-gray-500">Forehead &amp; Crow's Feet</p></div>
                     </div>
-                    <div class="bg-white rounded-xl overflow-hidden shadow-md">
+                    <div class="bg-white rounded-xl overflow-hidden shadow-md fade-up">
                         <div class="grid grid-cols-2 gap-2 p-2">
                             <div><p class="text-xs text-gray-500 mb-1">Before</p><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Before treatment" class="rounded-lg w-full h-32 object-cover" loading="lazy" /></div>
                             <div><p class="text-xs text-gray-500 mb-1">After</p><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="After treatment" class="rounded-lg w-full h-32 object-cover" loading="lazy" /></div>
@@ -300,18 +362,18 @@
         <!-- BOOKING CTA BAND -->
         <section class="bg-teal-primary py-16 px-4">
             <div class="max-w-4xl mx-auto text-center text-white">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Transform Your Skin?</h2>
-                <p class="text-xl mb-8 text-teal-50">Book your consultation today — no obligation, just expert advice.</p>
-                <a href="#" class="book-now-btn inline-block bg-white text-teal-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105 shadow-lg">Book Now</a>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 fade-up">Ready to Transform Your Skin?</h2>
+                <p class="text-xl mb-8 text-teal-50 fade-up">Book your consultation today — no obligation, just expert advice.</p>
+                <a href="#" class="book-now-btn inline-block bg-white text-teal-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition transform hover:scale-105 shadow-lg fade-up">Book Now</a>
             </div>
         </section>
 
         <!-- BLOG PREVIEW -->
         <section class="py-16 px-4 bg-white">
             <div class="max-w-7xl mx-auto">
-                <h2 class="text-3xl font-bold text-center mb-12">Latest from the Blog</h2>
+                <h2 class="text-3xl font-bold text-center mb-12 fade-up">Latest from the Blog</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 fade-up">
                         <img src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=80" alt="Skincare routine" class="w-full h-48 object-cover" loading="lazy" />
                         <div class="p-6">
                             <p class="text-sm text-teal-primary mb-2">March 15, 2024</p>
@@ -320,7 +382,7 @@
                             <a href="#" class="text-teal-primary font-medium hover:underline">Read More →</a>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 fade-up">
                         <img src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=80" alt="Laser treatment info" class="w-full h-48 object-cover" loading="lazy" />
                         <div class="p-6">
                             <p class="text-sm text-teal-primary mb-2">March 2, 2024</p>
@@ -329,7 +391,7 @@
                             <a href="#" class="text-teal-primary font-medium hover:underline">Read More →</a>
                         </div>
                     </div>
-                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100">
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 fade-up">
                         <img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=500&amp;q=80" alt="Skincare products" class="w-full h-48 object-cover" loading="lazy" />
                         <div class="p-6">
                             <p class="text-sm text-teal-primary mb-2">February 18, 2024</p>
@@ -339,7 +401,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="text-center mt-8"><a href="#" class="text-teal-primary font-medium hover:underline">View All Articles →</a></div>
+                <div class="text-center mt-8 fade-up"><a href="#" class="text-teal-primary font-medium hover:underline">View All Articles →</a></div>
             </div>
         </section>
 
@@ -348,28 +410,28 @@
             <div class="max-w-4xl mx-auto">
                 <div class="grid grid-cols-1 gap-12">
                     <div>
-                        <h2 class="text-3xl font-bold mb-6">Get in Touch</h2>
-                        <p class="text-gray-600 mb-8">Ready to start your journey? Contact us for a free consultation or to ask any questions.</p>
+                        <h2 class="text-3xl font-bold mb-6 fade-up">Get in Touch</h2>
+                        <p class="text-gray-600 mb-8 fade-up">Ready to start your journey? Contact us for a free consultation or to ask any questions.</p>
                         <div class="space-y-4 mb-8">
-                            <div class="flex items-start">
+                            <div class="flex items-start fade-up">
                                 <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0"><i class="fas fa-map-marker-alt text-teal-primary"></i></div>
                                 <div><h3 class="font-semibold">Visit Us</h3><p class="text-gray-600">123 Medical Square, London, W1 2AB</p></div>
                             </div>
-                            <div class="flex items-start">
+                            <div class="flex items-start fade-up">
                                 <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0"><i class="fas fa-phone text-teal-primary"></i></div>
                                 <div><h3 class="font-semibold">Call Us</h3><p class="text-gray-600">01234 56789</p></div>
                             </div>
-                            <div class="flex items-start">
+                            <div class="flex items-start fade-up">
                                 <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0"><i class="fas fa-envelope text-teal-primary"></i></div>
-                                <div><h3 class="font-semibold">Email</h3><p class="text-gray-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bfd7dad3d3d0ffd8d3d0c8dcd3d6d1d6dc91dcd091cad4">[email protected]</a></p></div>
+                                <div><h3 class="font-semibold">Email</h3><p class="text-gray-600"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="abc3cec7c7c4ebccc7c4dcc8c7c2c5c2c885c8c485dec0">[email protected]</a></p></div>
                             </div>
-                            <div class="flex items-start">
+                            <div class="flex items-start fade-up">
                                 <div class="w-10 h-10 bg-teal-100 rounded-lg flex items-center justify-center mr-4 flex-shrink-0"><i class="fas fa-clock text-teal-primary"></i></div>
                                 <div><h3 class="font-semibold">Opening Hours</h3><p class="text-gray-600">Mon-Fri: 9am - 8pm</p><p class="text-gray-600">Sat: 10am - 5pm</p><p class="text-gray-600">Sun: Closed</p></div>
                             </div>
                         </div>
                         <!-- Social Proof Badges - icons only -->
-                        <div class="flex flex-wrap gap-6">
+                        <div class="flex flex-wrap gap-6 fade-up">
                             <div class="flex items-center gap-2"><div class="trust-icon"><i class="fas fa-shield-alt"></i></div><span class="text-sm font-medium text-gray-700">GMC Registered</span></div>
                             <div class="flex items-center gap-2"><div class="trust-icon"><i class="fas fa-check-circle"></i></div><span class="text-sm font-medium text-gray-700">CQC Registered</span></div>
                             <div class="flex items-center gap-2"><div class="trust-icon"><i class="fas fa-certificate"></i></div><span class="text-sm font-medium text-gray-700">JCCP</span></div>
@@ -382,13 +444,23 @@
         <!-- INSTAGRAM FEED (4 images only) -->
         <section class="py-16 px-4 bg-gray-50">
             <div class="max-w-7xl mx-auto">
-                <h2 class="text-3xl font-bold text-center mb-4">Follow Our Journey</h2>
-                <p class="text-gray-600 text-center mb-8">@glowclinic</p>
+                <h2 class="text-3xl font-bold text-center mb-4 fade-up">Follow Our Journey</h2>
+                <p class="text-gray-600 text-center mb-8 fade-up">@glowclinic</p>
                 <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
-                    <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Clinic" class="w-full h-full object-cover" loading="lazy" /></div>
-                    <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Treatment" class="w-full h-full object-cover" loading="lazy" /></div>
-                    <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Results" class="w-full h-full object-cover" loading="lazy" /></div>
-                    <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Products" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-up"><img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Clinic" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-up"><img src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Treatment" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-up"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Results" class="w-full h-full object-cover" loading="lazy" /></div>
+                    <div class="aspect-square bg-gray-200 rounded-lg overflow-hidden fade-up"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=300&amp;q=80" alt="Products" class="w-full h-full object-cover" loading="lazy" /></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MAP SECTION (new) -->
+        <section class="py-16 px-4 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-12 fade-up">Find Us</h2>
+                <div class="map-container fade-up">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2483.680410977986!2d-0.127758384229801!3d51.50735097963546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x48761b3f0b2b1b1b%3A0x2b2b2b2b2b2b2b2b!2sLondon%2C%20UK!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy"></iframe>
                 </div>
             </div>
         </section>
@@ -420,7 +492,7 @@
                     <ul class="space-y-3">
                         <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3 text-teal-400"></i><span>123 Medical Square, London, W1 2AB</span></li>
                         <li class="flex items-center"><i class="fas fa-phone mr-3 text-teal-400"></i><a href="tel:+44123456789" class="hover:text-teal-400">01234 56789</a></li>
-                        <li class="flex items-center"><i class="fas fa-envelope mr-3 text-teal-400"></i><a href="/cdn-cgi/l/email-protection#630b060f0f0c23040f0c14000f0a0d0a004d000c4d1608" class="hover:text-teal-400"><span class="__cf_email__" data-cfemail="bad2dfd6d6d5faddd6d5cdd9d6d3d4d3d994d9d594cfd1">[email protected]</span></a></li>
+                        <li class="flex items-center"><i class="fas fa-envelope mr-3 text-teal-400"></i><a href="/cdn-cgi/l/email-protection#a1c9c4cdcdcee1c6cdced6c2cdc8cfc8c28fc2ce8fd4ca" class="hover:text-teal-400"><span class="__cf_email__" data-cfemail="7b131e1717143b1c17140c18171215121e551814550e10">[email protected]</span></a></li>
                     </ul>
                     <!-- Newsletter Signup -->
                     <div class="mt-6">
@@ -484,10 +556,10 @@
 
     <!-- WhatsApp Chat Widget (floating) -->
     <div class="fixed bottom-24 right-4 md:bottom-8 md:right-8 z-50">
-        <a href="https://wa.me/44123456789" class="flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition transform hover:scale-110"><i class="fab fa-whatsapp text-white text-2xl"></i></a>
+        <a href="https://wa.me/44123456789" class="flex items-center justify-center w-14 h-14 bg-green-500 rounded-full shadow-lg hover:bg-green-600 transition transform hover:scale-110 whatsapp-pulse"><i class="fab fa-whatsapp text-white text-2xl"></i></a>
     </div>
 
-    <!-- JavaScript -->
+    <!-- JavaScript for Intersection Observer (scroll animations) -->
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script>
         // Modal functions
@@ -541,6 +613,19 @@
             const images = document.querySelectorAll('img[loading="lazy"]');
             images.forEach(img => { img.loading = 'lazy'; });
         }
+
+        // Intersection Observer for fade-up animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
     </script>
 </body>
 </html>
